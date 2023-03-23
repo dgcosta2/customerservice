@@ -1,10 +1,13 @@
 package edu.iu.c322.customerservice.model;
 
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.Objects;
 
 public class Customer {
 
     private int id;
+    @NotEmpty(message = "name cannot be empty.")
     private String name;
     private String email;
 
