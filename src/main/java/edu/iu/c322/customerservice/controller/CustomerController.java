@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/customers")
@@ -34,7 +35,10 @@ public class CustomerController {
     @PutMapping("/{id}")
     public void update(@Valid @RequestBody Customer customer, @PathVariable int id) {
         customer.setId(id);
-        repository.save(customer);
+        Optional<Customer> c = repository.findById(id);
+        if (!c.equals(Optional.empty()))
+            repository.save(customer);
+        else throw new IllegalStateException("Customer is not in the database.");
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
