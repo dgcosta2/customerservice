@@ -36,7 +36,7 @@ public class CustomerController {
     public void update(@Valid @RequestBody Customer customer, @PathVariable int id) {
         customer.setId(id);
         Optional<Customer> c = repository.findById(id);
-        if (!c.equals(Optional.empty()))
+        if (c.isPresent())
             repository.save(customer);
         else throw new IllegalStateException("Customer is not in the database.");
     }
